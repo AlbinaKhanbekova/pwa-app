@@ -1,28 +1,57 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import * as config from './config.json'
+
+import { withStyles, Typography } from '@material-ui/core'
+
+import NewsCard from './NewsCard'
+
+const styles = theme => ({
+  root: {
+  },
+  news: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flex: 1,
+    marginTop: theme.spacing.unit,
+    position: 'relative',   
+    justifyContent: 'space-between', 
+  }
+})
 
 class App extends Component {
+  state = {
+    data: [],
+  }
+  async componentDidMount() {
+    var url = 'https://newsapi.org/v2/top-headlines?' +
+          'country=us&' +
+          `apiKey=${config.api}`;
+
+    let response = await fetch(url);
+  // only proceed once promise is resolved
+    let data = await response.json();
+    this.setState({ data: data.articles })
+  }
   render() {
+    const { classes } = this.props
+    const { data } = this.state
+    // if (data.)
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className={classes.root}>
+        <Typography variant="h2">News</Typography>
+        <div className={classes.news}>
+          {data.map(news => (
+            <NewsCard
+              key={news.title}
+              data={news}
+            />
+          ))}
+        </div>
       </div>
     );
   }
 }
 
-export default App;
+export default withStyles(styles, { withTheme: true })(App);
