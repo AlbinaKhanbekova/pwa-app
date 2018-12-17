@@ -26,7 +26,7 @@ class App extends Component {
   }
   async componentDidMount() {
     var url = 'https://newsapi.org/v2/top-headlines?' +
-          'country=us&' +
+          'country=ru&' +
           `apiKey=${config.api}`;
 
     let response = await fetch(url);
