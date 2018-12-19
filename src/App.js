@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import * as config from './config.json'
 
@@ -27,7 +26,7 @@ class App extends Component {
   }
   async componentDidMount() {
     var url = 'https://newsapi.org/v2/top-headlines?' +
-          'country=ru&' +
+          'country=us&' +
           `apiKey=${config.api}`;
 
     let response = await fetch(url);
@@ -48,7 +47,6 @@ class App extends Component {
           exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
           dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </Typography>
-        <button className="js-push-btn">Subscribe</button>
         {isLoading && (
           <LinearProgress />
         )}
